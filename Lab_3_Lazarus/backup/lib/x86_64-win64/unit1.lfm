@@ -1,0 +1,94 @@
+object Form1: TForm1
+  Left = 536
+  Height = 491
+  Top = 229
+  Width = 590
+  Caption = 'Form1'
+  ClientHeight = 491
+  ClientWidth = 590
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  Position = poDefaultPosOnly
+  LCLVersion = '3.4.0.0'
+  object P549: TPanel
+    Left = 320
+    Height = 300
+    Top = 90
+    Width = 226
+    Alignment = taLeftJustify
+    BevelColor = clMenuHighlight
+    ClientHeight = 300
+    ClientWidth = 226
+    TabOrder = 0
+    object Memo2: TMemo
+      Left = 10
+      Height = 281
+      Top = 10
+      Width = 210
+      Lines.Strings = (
+        'Memo2'
+      )
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 0
+    end
+  end
+  object P0831: TPanel
+    Left = 40
+    Height = 302
+    Top = 90
+    Width = 230
+    Alignment = taLeftJustify
+    BevelColor = clMenuHighlight
+    ClientHeight = 302
+    ClientWidth = 230
+    ParentBidiMode = False
+    TabOrder = 1
+    object Memo1: TMemo
+      Left = 10
+      Height = 281
+      Top = 10
+      Width = 210
+      Lines.Strings = (
+        'Memo1'
+      )
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 0
+      OnChange = Memo1Change
+    end
+  end
+  object Salir: TButton
+    Left = 250
+    Height = 31
+    Top = 410
+    Width = 94
+    Caption = 'Salir'
+    TabOrder = 2
+    OnClick = SalirClick
+  end
+  object SerialPort1: TLazSerial
+    Active = False
+    BaudRate = br__2400
+    DataBits = db8bits
+    Parity = pNone
+    FlowControl = fcNone
+    StopBits = sbOne
+    SynSer.Tag = 0
+    SynSer.Handle = -1
+    SynSer.RaiseExcept = False
+    SynSer.TestDSR = False
+    SynSer.TestCTS = False
+    SynSer.MaxLineLength = 0
+    SynSer.DeadlockTimeout = 30000
+    SynSer.LinuxLock = False
+    SynSer.ConvertLineEnd = False
+    SynSer.AtTimeout = 1000
+    SynSer.InterPacketTimeout = True
+    Device = 'COM2'
+    RcvLineCRLF = False
+    OnRxData = SerialPort1RxData
+    Left = 60
+    Top = 19
+  end
+end
