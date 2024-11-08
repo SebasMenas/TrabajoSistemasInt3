@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 40
-  Height = 494
-  Top = 317
+  Left = 971
+  Height = 526
+  Top = 266
   Width = 1145
   Caption = 'Form1'
-  ClientHeight = 494
+  ClientHeight = 526
   ClientWidth = 1145
   OnCreate = FormCreate
   LCLVersion = '3.4.0.0'
@@ -35,6 +35,10 @@ object Form1: TForm1
           TickWidth = 20
           Marks.LabelBrush.Style = bsClear
           Minors = <>
+          Range.Max = 40
+          Range.Min = -20
+          Range.UseMax = True
+          Range.UseMin = True
           Title.LabelFont.Orientation = 900
           Title.LabelBrush.Style = bsClear
         end      
@@ -42,6 +46,10 @@ object Form1: TForm1
           Alignment = calBottom
           Marks.LabelBrush.Style = bsClear
           Minors = <>
+          Range.Max = 20
+          Range.Min = 1
+          Range.UseMax = True
+          Range.UseMin = True
           Title.LabelBrush.Style = bsClear
         end>
       Title.Text.Strings = (
@@ -64,6 +72,7 @@ object Form1: TForm1
     Height = 25
     Top = 424
     Width = 108
+    OnChange = TrackBar1Change
     Position = 0
     TabOrder = 2
   end
@@ -74,6 +83,7 @@ object Form1: TForm1
     Width = 77
     Caption = 'CheckBox1'
     TabOrder = 3
+    OnChange = CheckBox1Change
   end
   object SpeedButton1: TSpeedButton
     Left = 208

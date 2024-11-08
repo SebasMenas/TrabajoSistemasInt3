@@ -22,25 +22,22 @@ type
     SpeedButton1: TSpeedButton;
     Timer1: TTimer;
     TrackBar1: TTrackBar;
-    procedure Button1Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
-    procedure Edit1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Label1Click(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure Timer2Timer(Sender: TObject);
+    procedure TrackBar1Change(Sender: TObject);
   private
-
+    procedure CargarDatos;
   public
 
   end;
 
 var
   Form1: TForm1;
-  aData: Array[1..1000] of Single;
-  nOffSet: Word; lOffSet: Boolean;
+  aData: array[1..1000] of Single;
+  totalDatos: Integer;
+  indiceActual: Integer;
 
 implementation
 
@@ -48,9 +45,11 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject);
 begin
 
+  totalDatos := 0;
+  indiceActual := 1;
 end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
@@ -58,75 +57,60 @@ begin
 
 end;
 
-procedure TForm1.Edit1Change(Sender: TObject);
+procedure TForm1.CargarDatos;
+var
+  archivo: File of Single;
+  dato: Single;
 begin
 
-end;
+  AssignFile(archivo, 'sensores.dat');
+  try
+    Reset(archivo);
+    totalDatos := 0;
 
-procedure TForm1.FormCreate(Sender: TObject);
-Var;
-  i: Byte;
-  t: Array[1..20] of string = ['t01', 't02', 't03', 't04', 't05', 't06',
-  't07', 't08', 't09', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17',
-  't18', 't19', 't20']
-  b: byts;
-
-
-begin
-
-end;
-
-procedure TForm1.Label1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.Panel1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.SpeedButton1Click(Sender: TObject);
- Var
-   nPh: File of Single;
-   nData: Single;
-   nPos: Byte;
-   lErr: Boolean;
-begin
-  nPos := 1; lErr := True;
-  AssignFile(nPh, 'sensores.dat');
-  Try
-    Reset(nPh);
-    While not Eof(nPh) Do
-     Begin
-       Read(nPh, nData);
-       aData[nPos] := nData;
-       Inc(nPos);
-     end;
-    For nPos := 1 To 20 Do
-     Chart1BarSeries1.SetYValue(nPos=1, aData[nPos]);
-    CloseFile(nPh); lErr := False;
-  finally
-    if lErr Then ShowMessage('archivo no existe');
+    while (not Eof(archivo)) and (totalDatos < Length(aData)) do
+    begin
+      Read(archivo, dato);
+      Inc(totalDatos);
+      aData[totalDatos] := dato;
+    end;
+    CloseFile(archivo);
+  except
+    ShowMessage('no existe el archivo');
   end;
 end;
 
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+  CargarDatos;
+  indiceActual := 1;
+  Chart1BarSeries1.Clear;
+  Timer1.Enabled := True;
+end;
+
 procedure TForm1.Timer1Timer(Sender: TObject);
-
 begin
-  if CheckBox1Change.Checked Then
-                 Begin
-                   dato := aData[i];
-                   For nPos := 1 to Max] Do
-                    dato[nPos] := dato[nPos = 1];
-                   dato[Max] :=
+  if indiceActual <= totalDatos then
+  begin
+
+    Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
+    Inc(indiceActual);
+    if totalDatos > 20 thentotalDatos := 20;
+  end
+  else
+  begin
+    Timer1.Enabled := False;
+  end;
+end;
+
+procedure TForm1.TrackBar1Change(Sender: TObject);
+begin
+  case TrackBar1.Position of
+  5: Timer1.Interval := 100;
+  end;
 
 end;
 
-procedure TForm1.Timer2Timer(Sender: TObject);
-begin
-
-end;
 
 end.
 
