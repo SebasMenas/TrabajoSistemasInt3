@@ -1,30 +1,90 @@
 object Form1: TForm1
-  Left = 270
-  Height = 617
-  Top = 188
-  Width = 1431
+  Left = 40
+  Height = 494
+  Top = 317
+  Width = 1145
   Caption = 'Form1'
-  ClientHeight = 617
-  ClientWidth = 1431
-  DesignTimePPI = 120
+  ClientHeight = 494
+  ClientWidth = 1145
   OnCreate = FormCreate
   LCLVersion = '3.4.0.0'
   object Button1: TButton
-    Left = 1264
-    Height = 56
-    Top = 552
-    Width = 134
+    Left = 1011
+    Height = 45
+    Top = 442
+    Width = 107
     Caption = 'Button1'
     TabOrder = 0
-    OnClick = Button1Click
   end
   object Panel1: TPanel
-    Left = 24
-    Height = 454
-    Top = 16
-    Width = 1392
+    Left = 20
+    Height = 363
+    Top = 13
+    Width = 1114
     Caption = 'Panel1'
+    ClientHeight = 363
+    ClientWidth = 1114
     TabOrder = 1
-    OnClick = Panel1Click
+    object Chart1: TChart
+      Left = 16
+      Height = 264
+      Top = 80
+      Width = 1096
+      AxisList = <      
+        item
+          TickWidth = 20
+          Marks.LabelBrush.Style = bsClear
+          Minors = <>
+          Title.LabelFont.Orientation = 900
+          Title.LabelBrush.Style = bsClear
+        end      
+        item
+          Alignment = calBottom
+          Marks.LabelBrush.Style = bsClear
+          Minors = <>
+          Title.LabelBrush.Style = bsClear
+        end>
+      Title.Text.Strings = (
+        'TAChart'
+      )
+      object Chart1BarSeries1: TBarSeries
+        BarBrush.Color = clRed
+      end
+    end
+    object Label1: TLabel
+      Left = 941
+      Height = 15
+      Top = 27
+      Width = 34
+      Caption = 'Label1'
+    end
+  end
+  object TrackBar1: TTrackBar
+    Left = 40
+    Height = 25
+    Top = 424
+    Width = 108
+    Position = 0
+    TabOrder = 2
+  end
+  object CheckBox1: TCheckBox
+    Left = 20
+    Height = 19
+    Top = 408
+    Width = 77
+    Caption = 'CheckBox1'
+    TabOrder = 3
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 208
+    Height = 22
+    Top = 416
+    Width = 23
+    OnClick = SpeedButton1Click
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 604
+    Top = 182
   end
 end
