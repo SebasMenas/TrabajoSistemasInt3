@@ -9,7 +9,9 @@ uses
   ComCtrls, Buttons, TAGraph, TASeries;
 
 type
+
   { TForm1 }
+
   TForm1 = class(TForm)
     Button1: TButton;
     Chart1: TChart;
@@ -28,6 +30,7 @@ type
   private
     procedure CargarDatos;
   public
+
   end;
 
 var
@@ -44,15 +47,21 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+
+  // Set the bottom axis range to be static
+  Chart1.BottomAxis.Minimum := 0;  // Set the minimum value
+  Chart1.BottomAxis.Maximum := 100;  // Set the maximum value
+
+  // Disable scrolling (optional)
+  Chart1.BottomAxis.Scaling.Auto := False;
+
   totalDatos := 0;
   indiceActual := 1;
-  // Configuración inicial del gráfico
-  Chart1BarSeries1.Clear;
 end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-  // Puedes agregar alguna lógica aquí si lo necesitas
+
 end;
 
 procedure TForm1.CargarDatos;
@@ -60,6 +69,7 @@ var
   archivo: File of Single;
   dato: Single;
 begin
+
   AssignFile(archivo, 'sensores.dat');
   try
     Reset(archivo);
@@ -89,36 +99,24 @@ procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   if indiceActual <= totalDatos then
   begin
-    // Agregar el nuevo dato al gráfico
+
     Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
-
-    // Aumentar el índice para leer el siguiente dato
     Inc(indiceActual);
-
-    // Limitar el número de barras visibles (en este caso 20)
-    if Chart1BarSeries1.Count > 20 then
-    begin
-      Chart1BarSeries1.Delete(0);  // Eliminar el primer valor para mantener el tamaño de la serie
-    end;
-
-    // Ajustar el eje X para mantener solo las últimas 20 entradas visibles
-    if Chart1BarSeries1.Count > 0 then
-      Chart1.BottomAxis.SetMinMax(0, Chart1BarSeries1.Count);
   end
   else
   begin
-    // Detener el temporizador cuando se acaben los datos
     Timer1.Enabled := False;
   end;
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-  // Ajuste del intervalo del temporizador según el TrackBar
   case TrackBar1.Position of
-    5: Timer1.Interval := 100;
+  5: Timer1.Interval := 100;
   end;
+
 end;
+
 
 end.
 

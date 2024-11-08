@@ -95,7 +95,6 @@ begin
 
     Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
     Inc(indiceActual);
-    if totalDatos > 20 thentotalDatos := 20;
   end
   else
   begin
