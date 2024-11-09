@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Buttons, TAGraph, TASeries;
+  ComCtrls, Buttons, TAGraph, TASeries, Types;
 
 type
 
@@ -20,7 +20,7 @@ type
     CheckBox1: TCheckBox;
     Label1: TLabel;
     Panel1: TPanel;
-    ProgressBar1: TProgressBar;
+    barrita: TProgressBar;
     SpeedButton1: TSpeedButton;
     StaticText1: TStaticText;
     Timer1: TTimer;
@@ -30,6 +30,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Label1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
+    procedure barritaContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
@@ -69,6 +71,12 @@ begin
 
 end;
 
+procedure TForm1.barritaContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
+end;
+
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
@@ -77,7 +85,7 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-
+  Close;
 end;
 
 procedure TForm1.CargarDatos;
@@ -91,12 +99,14 @@ begin
     Reset(archivo);
     totalDatos := 0;
 
-    while (not Eof(archivo)) and (totalDatos < Length(aData)) do
+    while (not Eof(archivo)) do
     begin
       Read(archivo, dato);
-      Inc(totalDatos);
       aData[totalDatos] := dato;
+      Inc(totalDatos);
     end;
+    For totalDatos := 1 To 20 Do
+     Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
     CloseFile(archivo);
   except
     ShowMessage('no existe el archivo');
@@ -112,29 +122,41 @@ begin
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
+var
+  i : Integer;
 begin
-  if indiceActual <= totalDatos then
-  begin
 
-    Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
-    Inc(indiceActual);
-    if Chart1BarSeries1.Count > 20 then
+  begin
+    if CheckBox1.Checked then
     begin
-      Chart1BarSeries1.Delete(0);
-    end;
+      For i := 1 To 1000 Do
+       aData[i] := aData[i + 1];
+      Chart1BarSeries1.Clear;
+      For i := 1 to 20 Do
+       Chart1BarSeries1.AddY(aData[i], IntToStr(i));
+
+      barrita.Position := barrita.Position + 1;
+      if barrita.position = barrita.Max Then
+      Begin
+        barrita.position := 1;
+        CheckBox1.Checked := False;
+      end;
   end
   else
   begin
     Timer1.Enabled := False;
   end;
 end;
-
+end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   case TrackBar1.Position of
+  1: Timer1.Interval := 800;
+  2: Timer1.Interval := 600;
+  3: Timer1.Interval := 400;
+  4: Timer1.Interval := 200;
   5: Timer1.Interval := 100;
   end;
-
 end;
 
 

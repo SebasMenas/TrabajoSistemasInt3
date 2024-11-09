@@ -1,11 +1,8 @@
 object Form1: TForm1
-  Left = 867
+  Left = 810
   Height = 550
   Top = 329
   Width = 1270
-  HorzScrollBar.Page = 1130
-  VertScrollBar.Page = 488
-  AutoScroll = True
   Caption = 'By Javier y Seba'
   ClientHeight = 550
   ClientWidth = 1270
@@ -73,11 +70,12 @@ object Form1: TForm1
       ParentColor = False
       TabOrder = 1
     end
-    object ProgressBar1: TProgressBar
+    object barrita: TProgressBar
       Left = 984
       Height = 20
       Top = 48
       Width = 100
+      OnContextPopup = barritaContextPopup
       TabOrder = 2
     end
   end
@@ -86,8 +84,9 @@ object Form1: TForm1
     Height = 25
     Top = 424
     Width = 108
+    Max = 5
     OnChange = TrackBar1Change
-    Position = 0
+    Position = 1
     TabOrder = 1
   end
   object CheckBox1: TCheckBox
