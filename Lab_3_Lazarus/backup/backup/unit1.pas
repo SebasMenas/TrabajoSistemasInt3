@@ -13,17 +13,23 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
-    Button1: TButton;
+    Button1: TSpeedButton;
+    Button2: TSpeedButton;
     Chart1: TChart;
     Chart1BarSeries1: TBarSeries;
     CheckBox1: TCheckBox;
     Label1: TLabel;
     Panel1: TPanel;
+    ProgressBar1: TProgressBar;
     SpeedButton1: TSpeedButton;
+    StaticText1: TStaticText;
     Timer1: TTimer;
     TrackBar1: TTrackBar;
+    procedure Button1Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
@@ -45,21 +51,31 @@ implementation
 
 { TForm1 }
 
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-
-  // Set the bottom axis range to be static
-  Chart1.BottomAxis.Minimum := 0;  // Set the minimum value
-  Chart1.BottomAxis.Maximum := 100;  // Set the maximum value
-
-  // Disable scrolling (optional)
-  Chart1.BottomAxis.Scaling.Auto := False;
-
+  // Inicializamos variables
   totalDatos := 0;
   indiceActual := 1;
 end;
 
+procedure TForm1.Label1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Label2Click(Sender: TObject);
+begin
+
+end;
+
+
 procedure TForm1.CheckBox1Change(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
 begin
 
 end;
@@ -102,6 +118,10 @@ begin
 
     Chart1BarSeries1.AddY(aData[indiceActual], IntToStr(indiceActual));
     Inc(indiceActual);
+    if Chart1BarSeries1.Count > 20 then
+    begin
+      Chart1BarSeries1.Delete(0);
+    end;
   end
   else
   begin
