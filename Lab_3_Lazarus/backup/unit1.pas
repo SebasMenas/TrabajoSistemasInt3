@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Buttons, TAGraph, TASeries, Types;
-
+  ComCtrls, Buttons, TAGraph, TASeries, TAFuncSeries, Types, TAChartUtils;
+//esto es una clase
 type
 
   { TForm1 }
@@ -17,6 +17,7 @@ type
     Button2: TSpeedButton;
     Chart1: TChart;
     Chart1BarSeries1: TBarSeries;
+    Chart1FitSeries1: TFitSeries;
     CheckBox1: TCheckBox;
     Label1: TLabel;
     Panel1: TPanel;
@@ -27,13 +28,19 @@ type
     TrackBar1: TTrackBar;
     //Inicializar funciones de la aplicacion
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Chart1BarSeries1BeforeDrawBar(ASender: TBarSeries;
+      ACanvas: TCanvas; const ARect: TRect; APointIndex, AStackIndex: Integer;
+      var ADoDefaultDrawing: Boolean);
     procedure CheckBox1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Label1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
     procedure barritaContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
+    procedure Panel1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure StaticText1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
@@ -79,6 +86,11 @@ begin
 
 end;
 
+procedure TForm1.Panel1Click(Sender: TObject);
+begin
+
+end;
+
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
@@ -93,6 +105,18 @@ begin
   Close;
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Chart1BarSeries1BeforeDrawBar(ASender: TBarSeries;
+  ACanvas: TCanvas; const ARect: TRect; APointIndex, AStackIndex: Integer;
+  var ADoDefaultDrawing: Boolean);
+begin
+
+end;
+
 
 //funcion cargar los datos
 procedure TForm1.CargarDatos;
@@ -101,7 +125,7 @@ var
   dato: Single; //Representa cada dato leido
 begin
 
-  AssignFile(archivo, 'sensores.dat') //Asignamos a la variable el sensores.dat;
+  AssignFile(archivo, 'sensores.dat'); //Asignamos a la variable el sensores.dat
   //manejo errores
   try
     Reset(archivo);  //Abrir el sensores.dat
@@ -129,6 +153,11 @@ begin
   Timer1.Enabled := True; //activamos el timer para ir dato por dato
 end;
 
+procedure TForm1.StaticText1Click(Sender: TObject);
+begin
+
+end;
+
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
   i : Integer; //i como entero
@@ -137,17 +166,21 @@ begin
   begin
     if CheckBox1.Checked then //si esta marcada la casilla de scrolling entonces
     begin
+      Chart1BarSeries1.Marks.Visible := True; // Habilita las etiquetas
       For i := 1 To 1000 Do //interar 1000 veces
        aData[i] := aData[i + 1]; //ira recorriendo dato por dato
       Chart1BarSeries1.Clear; //limpia grafico
       For i := 1 to 20 Do //itera 20 veces
-       Chart1BarSeries1.AddY(aData[i], IntToStr(i)); //para el scrolling, agrega datos al y
+       Chart1BarSeries1.AddY(aData[i], IntToStr(i)); //para el scrolling, agrega datos al "Y"
+       Chart1BarSeries1.Marks.Style := smsValue;
+
 
       barrita.Position := barrita.Position + 1; //la barra de progreso va aumentando
       if barrita.position = barrita.Max Then  //si la barra de progreso llega al final entonces
       Begin
         barrita.position := 1; //vuelve a posicion 1
         CheckBox1.Checked := False; //casilla scrolling se desactiva
+
       end;
   end
   else
