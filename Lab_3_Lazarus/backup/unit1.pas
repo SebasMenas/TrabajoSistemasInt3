@@ -97,17 +97,30 @@ begin
 
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+ var
+  lRect: TRect;
+  lFormBitmap: TBitmap;
+ begin
+  lRect := Bounds(0, 0, ClientWidth, ClientHeight);
+  lFormBitmap := TBitmap.Create;
+  try
+    lFormBitmap.Width := ClientWidth;
+    lFormBitmap.Height := ClientHeight;
+    lFormBitmap.Canvas.CopyRect(lRect, Canvas, lRect);
+    lFormBitmap.SaveToFile('output.bmp');
+  finally
+    lFormBitmap.Free;
+  end;
+ end;
+
+
 
 //Boton de salir
 procedure TForm1.Button1Click(Sender: TObject);
 //si se presiona, cierra la app
 begin
   Close;
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-
 end;
 
 procedure TForm1.Chart1BarSeries1BeforeDrawBar(ASender: TBarSeries;

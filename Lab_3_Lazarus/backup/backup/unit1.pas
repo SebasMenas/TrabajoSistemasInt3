@@ -97,17 +97,30 @@ begin
 
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+ var
+  lRect: TRect;
+  lFormBitmap: TBitmap;
+ begin
+  lRect := Bounds(0, 0, ClientWidth, ClientHeight);
+  lFormBitmap := TBitmap.Create;
+  try
+    lFormBitmap.Width := ClientWidth;
+    lFormBitmap.Height := ClientHeight;
+    lFormBitmap.Canvas.CopyRect(lRect, Canvas, lRect);
+    lFormBitmap.SaveToFile('D:\Programas\output.bmp');
+  finally
+    lFormBitmap.Free;
+  end;
+ end;
+
+
 
 //Boton de salir
 procedure TForm1.Button1Click(Sender: TObject);
 //si se presiona, cierra la app
 begin
   Close;
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-
 end;
 
 procedure TForm1.Chart1BarSeries1BeforeDrawBar(ASender: TBarSeries;
@@ -172,7 +185,6 @@ begin
       Chart1BarSeries1.Clear; //limpia grafico
       For i := 1 to 20 Do //itera 20 veces
        Chart1BarSeries1.AddY(aData[i], IntToStr(i)); //para el scrolling, agrega datos al "Y"
-       Chart1BarSeries1.Marks.MarkPositions := i;
        Chart1BarSeries1.Marks.Style := smsValue;
 
 
